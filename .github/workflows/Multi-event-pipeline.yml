@@ -1,20 +1,23 @@
 name: "Multi-event-pipeline" # Name of pipeline
 on:
-    push: #Event: Whenever a push is made to the repository on the master branch
+    push: #Event1: Whenever a push is made to the repository on the master branch
         branches:
             - master
             - test
-    pull_request:
+    schedule: #event2
+        - cron: 30 5 * * 2,4
+
+    pull_request: #event3
         branches:
             - master
             - test
         types:
             - closed
-            - opened
+            - opened     
 
 
 jobs:
-    on-push: #job name
+    on-push: #job 1
         if: github.event_name == 'push'
         runs-on: ubuntu-latest
         steps: #Steps to be executed in the job
@@ -26,9 +29,15 @@ jobs:
         steps: 
             - name: "Running on pull request"
               run: echo "Running on pull request"
-    on-pull-request-closed:
+    on-pull-request-closed: #job 3
         if: github.event_name == 'pull_request' && github.event.action == 'closed'
         runs-on: ubuntu-latest
         steps: 
             - name: "Running on pull request on close"
               run: echo "Running on pull request on close"
+    on-schedule: #job4
+        if: github.event_name == 'schedule'
+        runs-on: ubuntu-latest
+        steps: 
+            - name: "Running on schedule"
+              run: echo "Running on schedule"
