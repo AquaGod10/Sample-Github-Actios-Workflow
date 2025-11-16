@@ -1,6 +1,6 @@
 name: "Multi-event-pipeline" # Name of pipeline
 on:
-    push: #Event name: Whenever a push is made to the repository on the master branch
+    push: #Event: Whenever a push is made to the repository on the master branch
         branches:
             - master
             - test
@@ -10,6 +10,7 @@ on:
             - test
         types:
             - closed
+            - opened
 
 
 jobs:
